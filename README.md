@@ -14,4 +14,4 @@ sudo pip3 install adafruit-circuitpython-servokit
 ## opencv识别物体
 见visiom_contral.py
 ## AI智能识别
-在写了
+使用onnx模型推理
