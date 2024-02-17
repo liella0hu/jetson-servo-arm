@@ -15,7 +15,7 @@ class arm_control(object):
     def homing(self):  # 舵机归位
         self.kit.servo[0].angle=30
         self.kit.servo[1].angle=90
-        self.kit.servo[2].angle=170
+        self.kit.servo[2].angle=160
         self.kit.servo[4].angle=30
         self.kit.servo[7].angle=180
         self.kit.servo[5].angle=90
@@ -106,12 +106,12 @@ class arm_control(object):
         # while abs(counter_1)<abs(target_relative_angle_1) or abs(counter_2)<abs(target_relative_angle_2) and  0<=target_angle_1<=180 and 0<=target_angle_2<=180:
         while ((abs(self.kit.servo[id_1].angle-target_angle_1>4)) or (abs(self.kit.servo[id_2].angle-target_angle_2>4))) and  (0<=target_angle_1<=180 and 0<=target_angle_2<=180):
             if  abs(counter_1)<abs(target_relative_angle_1):
-                print("start_1", counter_1, "    angle1",  self.kit.servo[id_1].angle)
+                print("start_1", counter_1, "    angle1  ",  id_1,"  ",self.kit.servo[id_1].angle)
                 self.kit.servo[id_1].angle=self.kit.servo[id_1].angle+speed_1*cocefficien_1
                 counter_1=counter_1+cocefficien_1*speed_1
                 time.sleep(run_time)
             if  abs(counter_2)<abs(target_relative_angle_2):
-                print("start_2", counter_2, "      angle2", self.kit.servo[id_2].angle)
+                print("start_2", counter_2, "    angle2  ", id_2,"  ",self.kit.servo[id_2].angle)
                 self.kit.servo[id_2].angle=self.kit.servo[id_2].angle+speed_2*cocefficien_2
                 counter_2=counter_2+cocefficien_2*speed_2
                 time.sleep(run_time)
@@ -199,18 +199,10 @@ class arm_control(object):
         self.servokit_work_process_3.start()
         # while self.kit.servo[3].angle>=90:
         #     self.kit.servo[3].angle=self.kit.servo[3].angle-1
-        #     time.sleep(0.01)
-    def movement_queue(self):
-        self.kit_relative_move(4,20,0.5)
-        time.sleep(0.2)
-        self.kit_relative_move(7, -20,0.5)
-        time.sleep(0.2)
-        self.kit_relative_move(4,20,0.5)
-        time.sleep(0.2)
-        self.kit_relative_move(7, -20,0.5)       
+        #     time.sleep(0.01)   
 
     def going_home(self):
-        self.kit_absolute_move(2,170)
+        self.kit_absolute_move(2,160)
         time.sleep(0.5)
         self.two_servokits_linkage_specified_angle(4, 7 , 30, 180,2,3,run_time=3)
         self.kit_absolute_move(5,90)

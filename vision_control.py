@@ -47,12 +47,41 @@ def open_cap(flag,object_coordinate):
     cv2.destroyAllWindows()
 
 def distance_angle_map(centre_y):
+    print("distance_angle_map")
     if not 0<=centre_y<=480:
         print("out of range")
         return 30,180
-    if 150<=centre_y<=190:
-        return 60,-50
+    if 150<=centre_y<=200:
+        print("4,7",55,-45)
+        return 55,-45
+
+    if 200<centre_y<=230:
+        print("4, 7", 50,-35)
+        return 50,-35
     
+    if 230<centre_y<=245:
+        print("4, 7", 40,-35)
+        return 45,-35
+    
+    if 245<=centre_y<=260:
+        print("4,7",35,-30)
+        return 40,-30
+    
+    if 260<centre_y<=275:
+        print("4, 7", 30,-25)
+        return 35,-25
+    
+    if 275<centre_y<=300:
+        print("4, 7", 25,-25)
+        return 30,-25
+
+    if 300<centre_y<=340:
+        print("4, 7", 25,-20)
+        return 25,-20
+    
+    else:
+        print("4, 7", 25,-15)
+        return 25,-15
 
 
 if __name__=='__main__':
@@ -76,26 +105,31 @@ if __name__=='__main__':
             print(flag)
             # arm.two_servokits_linkage_specified_angle(2,4,140,50)
             centre_x=(object_coordinate[0]+object_coordinate[2]+object_coordinate[4]+object_coordinate[6])//4
-            centre_y=(object_coordinate[1]+object_coordinate[3]+object_coordinate[5]+object_coordinate[7])//4
-            print("centre_y",centre_y)
             while abs(centre_x-320)>30:
                 if centre_x>=350 and arm.kit.servo[5].angle>=0:
                     arm.kit.servo[5].angle=arm.kit.servo[5].angle-2
                     time.sleep(0.2)
-                if centre_x<=290  and arm.kit.servo[5].angle<=100:
+                if centre_x<=290  and arm.kit.servo[5].angle<=180:
                     arm.kit.servo[5].angle=arm.kit.servo[5].angle+2
                     time.sleep(0.2)
                 centre_x=(object_coordinate[0]+object_coordinate[2]+object_coordinate[4]+object_coordinate[6])//4
                 print("centre_x",centre_x)
-            # flag.value=2
+            centre_y=(object_coordinate[1]+object_coordinate[3]+object_coordinate[5]+object_coordinate[7])//4
+            print("centre_y",centre_y)
+            flag.value=2
 
-            if flag.value==2 and (object_coordinate[0]!=0 and object_coordinate[7]!=0):
-                # distance=...
+            if flag.value==2 and centre_y:
+                distance4,distance7=distance_angle_map(centre_y-10)
                 print(flag)
                 print("centre_y",centre_y)
-                arm.two_servokits_linkage_specified_angle(2,4,170,40);time.sleep(0.5)
-                arm.two_servokits_linkage(4,7,50,-40,3,2,run_time=3);time.sleep(0.5)  # centre_y =95 distance=15cm
-                arm.two_servokits_linkage_specified_angle(4,7,30,180,run_time=3)
+                arm.two_servokits_linkage_specified_angle(2,4,162,35);time.sleep(0.5)
+                arm.two_servokits_linkage(4,7,distance4,distance7,3,2,run_time=3);time.sleep(0.5)
+                arm.kit_absolute_move(0,100);time.sleep(0.5)
+                arm.two_servokits_linkage_specified_angle(7,4,170,40);time.sleep(0.5)
+                arm.kit_absolute_move(5,180)
+                arm.kit_absolute_move(0,30)
+                # arm.two_servokits_linkage_specified_angle(4,7,30,170,run_time=3)
+                flag.value=3
                 # arm.two_servokits_linkage_specified_angle(2,4,140,60)
             # arm.going_home()
             # flag.value=3
