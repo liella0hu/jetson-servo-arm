@@ -1,5 +1,4 @@
 import os
-
 import onnxruntime
 import time
 import numpy as np
@@ -176,7 +175,7 @@ def draw(image, box_data):
 
 
 if __name__ == "__main__":
-    onnx_path = 'rub219.onnx'
+    onnx_path = 'best.onnx'
     model = YOLOV5(onnx_path)
     timef = 15  # 隔15帧保存一张图片
     cap = cv2.VideoCapture(0)
