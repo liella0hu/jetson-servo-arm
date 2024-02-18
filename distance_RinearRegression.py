@@ -51,7 +51,7 @@ plt.legend()
 
 def line_distance_angle(distance):
     line_distance_angle4 = int(-0.2523809523809525*distance + 106.88095238095241)
-    line_distance_angle7 = int(0.21309523809523817*distance - -87.09523809523812)
+    line_distance_angle7 = int(0.21309523809523817*distance - 87.09523809523812)
     return line_distance_angle4, line_distance_angle7
 
 plt.show()
