@@ -83,6 +83,11 @@ def distance_angle_map(centre_y):
         print("4, 7", 25,-15)
         return 25,-15
 
+def line_distance_angle(distance):
+    line_distance_angle4 = int(-0.2523809523809525*distance + 106.88095238095241)
+    line_distance_angle7 = int(0.21309523809523817*distance - 87.09523809523812)
+    return line_distance_angle4, line_distance_angle7
+
 
 if __name__=='__main__':
     arm=arm_control()
@@ -119,7 +124,7 @@ if __name__=='__main__':
             flag.value=2
 
             if flag.value==2 and centre_y:
-                distance4,distance7=distance_angle_map(centre_y-10)
+                distance4,distance7=line_distance_angle(centre_y)
                 print(flag)
                 print("centre_y",centre_y)
                 arm.two_servokits_linkage_specified_angle(2,4,162,35);time.sleep(0.5)
