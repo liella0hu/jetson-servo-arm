@@ -46,42 +46,6 @@ def open_cap(flag,object_coordinate):
     capture.release()
     cv2.destroyAllWindows()
 
-def distance_angle_map(centre_y):
-    print("distance_angle_map")
-    if not 0<=centre_y<=480:
-        print("out of range")
-        return 30,180
-    if 150<=centre_y<=200:
-        print("4,7",55,-45)
-        return 55,-45
-
-    if 200<centre_y<=230:
-        print("4, 7", 50,-35)
-        return 50,-35
-    
-    if 230<centre_y<=245:
-        print("4, 7", 40,-35)
-        return 45,-35
-    
-    if 245<=centre_y<=260:
-        print("4,7",35,-30)
-        return 40,-30
-    
-    if 260<centre_y<=275:
-        print("4, 7", 30,-25)
-        return 35,-25
-    
-    if 275<centre_y<=300:
-        print("4, 7", 25,-25)
-        return 30,-25
-
-    if 300<centre_y<=340:
-        print("4, 7", 25,-20)
-        return 25,-20
-    
-    else:
-        print("4, 7", 25,-15)
-        return 25,-15
 
 def line_distance_angle(distance):
     line_distance_angle4 = int(-0.2523809523809525*distance + 106.88095238095241)
@@ -124,7 +88,8 @@ if __name__=='__main__':
             flag.value=2
 
             if flag.value==2 and centre_y:
-                distance4,distance7=line_distance_angle(centre_y)
+                # distance4, distance7 = distance_angle_map(centre_y)
+                distance4,distance7 = line_distance_angle(centre_y)
                 print(flag)
                 print("centre_y",centre_y)
                 arm.two_servokits_linkage_specified_angle(2,4,162,35);time.sleep(0.5)
@@ -145,3 +110,39 @@ if __name__=='__main__':
     
     # arm_process.start()
 
+# def distance_angle_map(centre_y):
+#     print("distance_angle_map")
+#     if not 0 <= centre_y <= 480:
+#         print("out of range")
+#         return 30, 180
+#     if 150 <= centre_y <= 200:
+#         print("4,7", 55, -45)
+#         return 55, -45
+#
+#     if 200 < centre_y <= 230:
+#         print("4, 7", 50, -35)
+#         return 50, -35
+#
+#     if 230 < centre_y <= 245:
+#         print("4, 7", 40, -35)
+#         return 45, -35
+#
+#     if 245 <= centre_y <= 260:
+#         print("4,7", 35, -30)
+#         return 40, -30
+#
+#     if 260 < centre_y <= 275:
+#         print("4, 7", 30, -25)
+#         return 35, -25
+#
+#     if 275 < centre_y <= 300:
+#         print("4, 7", 25, -25)
+#         return 30, -25
+#
+#     if 300 < centre_y <= 340:
+#         print("4, 7", 25, -20)
+#         return 25, -20
+#
+#     else:
+#         print("4, 7", 25, -15)
+#         return 25, -15
