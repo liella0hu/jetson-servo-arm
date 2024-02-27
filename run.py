@@ -118,7 +118,42 @@ class arm_control(object):
         self.kit_absolute_move(id=id_1, target_angle=int(target_angle_1), time_s=0.5)  # 角度矫正
         self.kit_absolute_move(id=id_2, target_angle=int(target_angle_2), time_s=0.5)
 
-# 从这里开始地从的控制代码就写完了，下面就是对各种机械臂动作组编辑的尝试
+    def three_servos_parallel_motion(self, id_1, id_2, id_3, target_angle1, target_angle2, target_angle3, speed1=2,
+                                     speed2=2, speed3=2, run_time=0.01):
+        current_angle_1, current_angle_2, current_angle_3 = self.kit.servo[id_1].angle, self.kit.servo[id_2].angle, \
+        self.kit.servo[id_3].angle
+        target_relative_angle1, target_relative_angle2, target_relative_angle3 = int(
+            target_angle1 - current_angle_1), int(target_angle2 - current_angle_2), int(target_angle3 - current_angle_3)
+        cocefficien_1 = 1 if target_relative_angle1 >= 0 else -1
+        cocefficien_2 = 1 if target_relative_angle2 >= 0 else -1
+        cocefficien_3 = 1 if target_relative_angle3 >= 0 else -1
+        counter_1, counter_2, counter_3 = 0, 0, 0
+        # run_time=0.05
+        while ((abs(self.kit.servo[id_1].angle - target_angle1 > 4)) or (
+        abs(self.kit.servo[id_2].angle - target_angle2 > 4)) or (
+               abs(self.kit.servo[id_3].angle - target_angle3 > 4))) and (
+                0 <= target_angle1 <= 180 and 0 <= target_angle2 <= 180):
+            if abs(counter_1) < abs(target_relative_angle1):
+                # print("start_1", counter_1, "    angle1  ",  id_1,"  ",self.kit.servo[id_1].angle)
+                print("start1  {}  angle {} {}".format(cocefficien_1, id_1, self.kit.servo[id_1].angle))
+                self.kit.servo[id_1].angle = self.kit.servo[id_1].angle + speed1 * cocefficien_1
+                counter_1 = counter_1 + cocefficien_1 * speed1
+                time.sleep(run_time)
+            if abs(counter_2) < abs(target_relative_angle2):
+                print("start1  {}  angle {} {}".format(cocefficien_2, id_2, self.kit.servo[id_2].angle))
+                self.kit.servo[id_2].angle = self.kit.servo[id_2].angle + speed2 * cocefficien_2
+                counter_2 = counter_2 + cocefficien_2 * speed2
+                time.sleep(run_time)
+            if abs(counter_3) < abs(target_relative_angle2):
+                print("start3  {}  angle {} {}".format(cocefficien_3, id_3, self.kit.servo[id_3].angle))
+                self.kit.servo[id_3].angle = self.kit.servo[id_3].angle + speed3 * cocefficien_3
+                counter_3 = counter_3 + cocefficien_3 * speed3
+                time.sleep(run_time)
+        self.kit_absolute_move(id=id_1, target_angle=int(target_angle1), time_s=0.5)  # 角度矫正
+        self.kit_absolute_move(id=id_2, target_angle=int(target_angle2), time_s=0.5)
+        self.kit_absolute_move(id=id_3, target_angle=int(target_angle3), time_s=0.5)
+
+    # 从这里开始地从的控制代码就写完了，下面就是对各种机械臂动作组编辑的尝试
 
     def keyboard_control_servokit(self):  # 键盘测试编辑的动作组，md真的麻烦改一下参数又要中断执行一次，谁能写个舵机的qt我能跪下来喊爹
         while True:
