@@ -53,7 +53,7 @@ def run_onnx_model(model_onnx_path, flag, object_coordinate):
     capture = cv2.VideoCapture(0)
     model = load_onnx.YOLOV5(model_onnx_path)
     timef = 15  # 隔15帧保存一张图片
-    sum_fg=0
+    sum_fg = 0
     while capture.isOpened():
         sum_fg += 1
         ret, frame = capture.read()
