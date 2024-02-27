@@ -118,8 +118,23 @@ class arm_control(object):
         self.kit_absolute_move(id=id_1, target_angle=int(target_angle_1), time_s=0.5)  # 角度矫正
         self.kit_absolute_move(id=id_2, target_angle=int(target_angle_2), time_s=0.5)
 
+
     def three_servos_parallel_motion(self, id_1, id_2, id_3, target_angle1, target_angle2, target_angle3, speed1=2,
                                      speed2=2, speed3=2, run_time=0.01):
+        """
+
+        :param id_1: servo_serial_number
+        :param id_2: servo_serial_number
+        :param id_3: servo_serial_number
+        :param target_angle1: servo_reaches_target_angle
+        :param target_angle2: servo_reaches_target_angle
+        :param target_angle3: servo_reaches_target_angle
+        :param speed1:
+        :param speed2:
+        :param speed3:
+        :param run_time:
+        :return:
+        """
         current_angle_1, current_angle_2, current_angle_3 = self.kit.servo[id_1].angle, self.kit.servo[id_2].angle, \
         self.kit.servo[id_3].angle
         target_relative_angle1, target_relative_angle2, target_relative_angle3 = int(
